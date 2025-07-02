@@ -1,0 +1,252 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Homenagem ao Nunu - Mocidade Independente</title>
+  <style>
+    body {
+      background-color: #fff;
+      font-family: Arial, sans-serif;
+      color: #900;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #ffffff;
+      color: #d10000;
+      text-align: center;
+      padding: 20px 10px;
+    }
+    .logo {
+      width: 180px;
+      margin-bottom: 10px;
+    }
+    .container {
+      padding: 20px;
+      max-width: 800px;
+      margin: auto;
+    }
+    .camisa {
+      width: 100%;
+      max-width: 400px;
+      display: block;
+      margin: 20px auto;
+      border: 4px solid #d10000;
+    }
+    .painel {
+      background-color: #ffe5e5;
+      border: 2px solid #d10000;
+      border-radius: 10px;
+      padding: 20px;
+      margin-top: 20px;
+      text-align: center;
+    }
+    .painel h2 {
+      margin-top: 0;
+    }
+    .painel p {
+      font-size: 1.2em;
+      margin: 8px 0;
+    }
+    .formulario {
+      display: none;
+      text-align: center;
+      margin-top: 30px;
+    }
+    input[type="number"], input[type="text"], input[type="password"] {
+      padding: 10px;
+      margin: 10px;
+      font-size: 1em;
+      width: 80%;
+      max-width: 300px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 1em;
+      background-color: #d10000;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    .compradores {
+      margin-top: 40px;
+      background: #fceeee;
+      border: 1px solid #d10000;
+      padding: 20px;
+      border-radius: 10px;
+    }
+    .compradores h3 {
+      margin-top: 0;
+    }
+    .compradores ul {
+      list-style: none;
+      padding: 0;
+    }
+    .compradores li {
+      font-size: 1em;
+      padding: 5px 0;
+      border-bottom: 1px solid #ddd;
+    }
+    .edit-btn {
+      color: #d10000;
+      cursor: pointer;
+      margin-left: 10px;
+    }
+    footer {
+      background-color: #d10000;
+      color: white;
+      text-align: center;
+      padding: 10px;
+      margin-top: 40px;
+      font-size: 0.9em;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <img src="https://www.alcancenarede.com/uploads/images/2025/07/image-1b7f469be.png" alt="Logo Escola" class="logo" />
+  <h1>Mocidade Independente da Cidade Alta</h1>
+</header>
+
+<div class="container">
+  <img src="https://www.alcancenarede.com/uploads/images/2025/07/image-fa2ec915b.png" alt="Arte da Camisa" class="camisa" />
+
+  <p style="text-align: center; font-size: 1.1em;">
+    Camisa especial da Bateria em homenagem ao eterno <strong>Nunu — Hudson Geraldo</strong>. <br/>
+    Toda renda líquida será destinada à continuidade do seu legado, ajudando a saldar compromissos deixados.
+  </p>
+
+  <div class="painel">
+    <h2>Transparência</h2>
+    <p><strong>Camisas Vendidas:</strong> <span id="vendidas">0</span></p>
+    <p><strong>Valor Arrecadado:</strong> R$ <span id="arrecadado">0,00</span></p>
+    <p><strong>Custo Total:</strong> R$ <span id="custo">0,00</span></p>
+    <p><strong>Saldo para Homenagem:</strong> R$ <span id="saldo">0,00</span></p>
+  </div>
+
+  <div class="compradores">
+    <h3>Lista de Colaboradores</h3>
+    <ul id="listaCompradores">
+      <!-- Nomes aparecem aqui -->
+    </ul>
+  </div>
+
+  <div class="formulario" id="formulario">
+    <h3>Inserir nova venda</h3>
+    <input type="text" id="nome" placeholder="Nome do comprador" required /><br/>
+    <input type="number" id="quantidade" placeholder="Quantidade de camisas" required /><br/>
+    <button onclick="atualizarDados()">Adicionar</button>
+  </div>
+
+  <div style="text-align:center; margin-top:30px;">
+    <input type="password" id="senha" placeholder="Digite a senha de acesso" />
+    <button onclick="verificarSenha()">Entrar</button>
+  </div>
+</div>
+
+<footer>
+  &copy; 2025 - Desenvolvido por Thiago Silva Xavier
+</footer>
+
+<script>
+  const preco = 50;
+  const custo = 42;
+  let totalVendidas = 0;
+  let totalArrecadado = 0;
+  let totalCusto = 0;
+  let totalSaldo = 0;
+
+  function verificarSenha() {
+    const senha = document.getElementById("senha").value;
+    if (senha === "469562") {
+      document.getElementById("formulario").style.display = "block";
+    } else {
+      alert("Senha incorreta!");
+    }
+  }
+
+  function atualizarDados() {
+    const nome = document.getElementById("nome").value.trim();
+    const qtd = parseInt(document.getElementById("quantidade").value);
+
+    if (!nome || isNaN(qtd) || qtd <= 0) {
+      alert("Preencha os campos corretamente.");
+      return;
+    }
+
+    totalVendidas += qtd;
+    totalArrecadado = totalVendidas * preco;
+    totalCusto = totalVendidas * custo;
+    totalSaldo = totalArrecadado - totalCusto;
+
+    document.getElementById("vendidas").innerText = totalVendidas;
+    document.getElementById("arrecadado").innerText = totalArrecadado.toFixed(2).replace(".", ",");
+    document.getElementById("custo").innerText = totalCusto.toFixed(2).replace(".", ",");
+    document.getElementById("saldo").innerText = totalSaldo.toFixed(2).replace(".", ",");
+
+    const lista = document.getElementById("listaCompradores");
+    const li = document.createElement("li");
+    li.innerHTML = `${nome} — ${qtd} camisa(s) <span class="edit-btn" onclick="editarEntrada(this, ${qtd}, '${nome}')">[editar]</span>`;
+    lista.appendChild(li);
+
+    document.getElementById("nome").value = "";
+    document.getElementById("quantidade").value = "";
+  }
+
+  function editarEntrada(elemento, qtdAntigo, nomeAntigo) {
+    const novoNome = prompt("Novo nome:", nomeAntigo);
+    const novaQtd = prompt("Nova quantidade:", qtdAntigo);
+
+    if (!novoNome || isNaN(novaQtd) || novaQtd <= 0) {
+      alert("Alteração cancelada ou inválida.");
+      return;
+    }
+
+    // Corrigir os totais
+    totalVendidas = totalVendidas - qtdAntigo + parseInt(novaQtd);
+    totalArrecadado = totalVendidas * preco;
+    totalCusto = totalVendidas * custo;
+    totalSaldo = totalArrecadado - totalCusto;
+
+    document.getElementById("vendidas").innerText = totalVendidas;
+    document.getElementById("arrecadado").innerText = totalArrecadado.toFixed(2).replace(".", ",");
+    document.getElementById("custo").innerText = totalCusto.toFixed(2).replace(".", ",");
+    document.getElementById("saldo").innerText = totalSaldo.toFixed(2).replace(".", ",");
+
+    // Atualizar o texto da entrada
+    const li = elemento.parentElement;
+    li.innerHTML = `${novoNome} — ${novaQtd} camisa(s) <span class="edit-btn" onclick="editarEntrada(this, ${novaQtd}, '${novoNome}')">[editar]</span>`;
+  }
+</script>
+
+
+<!-- Barra decorativa superior -->
+<div style="height: 6px; background-color: #d10000; width: 100%; position: fixed; top: 0; left: 0; z-index: 999;"></div>
+
+<!-- Botão flutuante do WhatsApp -->
+<a href="https://wa.me/5532988405113" target="_blank" style="
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #25D366;
+  color: white;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+  z-index: 999;
+  font-size: 30px;
+">
+  &#x2709;
+</a>
+
+</body>
+
+</html>
